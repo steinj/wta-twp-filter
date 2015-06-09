@@ -72,14 +72,14 @@ $("tr").each(function(row, rValue) {
  * @return list of strings in which each string is a possible filter option
  */
 function getOptions(clazz, extractor) {
-	options = ['any'];
-	$("." + clazz).each(function() {
-		var txt = extractor(listLeaf($(this))).toLowerCase();
-		if (options.indexOf(txt) === -1) {
-		  options.push(txt);
-		}
-	});
-	return options; 
+  options = ['any'];
+  $("." + clazz).each(function() {
+    var txt = extractor(listLeaf($(this))).toLowerCase();
+    if (options.indexOf(txt) === -1) {
+      options.push(txt);
+    }
+  });
+  return options; 
 }
 
 /**
@@ -91,10 +91,10 @@ function getOptions(clazz, extractor) {
  * @return the last DOM element, i.e. a DOM element with no children
  */
 function listLeaf(node) {
-		if ($(node).children().size() == 0) {
-			return node;
+    if ($(node).children().size() == 0) {
+      return node;
     }
-		return listLeaf($(node).children()[0]);
+    return listLeaf($(node).children()[0]);
 }
 
 /**
@@ -151,14 +151,14 @@ $("th").each(function(idx) {
        * Reduce options to ['any', 'open', 'full', 'waitlist']
        */
       extractor = function(v) {
-				var txt = v.innerHTML;        
-				if (txt.indexOf("Join") > -1) {
+        var txt = v.innerHTML;        
+        if (txt.indexOf("Join") > -1) {
           return "open";
-				} else if (txt.indexOf("wta.org") > -1) {
-					txt = $(v).parent().text();
-					if (txt.indexOf("Waitlist") > -1) {
-						return txt.substr(txt.indexOf("Waitlist"), "Waitlist".length);
-					}
+        } else if (txt.indexOf("wta.org") > -1) {
+          txt = $(v).parent().text();
+          if (txt.indexOf("Waitlist") > -1) {
+            return txt.substr(txt.indexOf("Waitlist"), "Waitlist".length);
+          }
         }
         return txt;
       }
@@ -203,19 +203,19 @@ $("th").each(function(idx) {
       // Create the selector & options
       var select = document.createElement('select');
       var options = getOptions(headerList[idx], extractor);
-			for (var i = 0; i < options.length; i++) {
-				addSimpleOption(select, options[i]);
-			}
+      for (var i = 0; i < options.length; i++) {
+        addSimpleOption(select, options[i]);
+      }
 
       // Create the filter
-			$(select).change(function() {
-				var opt = $(this).find("option:selected").val().toLowerCase();
+      $(select).change(function() {
+        var opt = $(this).find("option:selected").val().toLowerCase();
 
-				$("." + headerList[idx]).each(function() {
+        $("." + headerList[idx]).each(function() {
           var val = extractor(listLeaf($(this))).toLowerCase();
-					updateHiding($(this).parent(), headerList[idx], val, val === opt || opt === "any"); 
-				});
-			});
+          updateHiding($(this).parent(), headerList[idx], val, val === opt || opt === "any"); 
+        });
+      });
       
       // Add the filter
       $(this).append(select);
